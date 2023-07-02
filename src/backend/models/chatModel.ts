@@ -1,4 +1,4 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model, Types, Date } from "mongoose";
 
 interface IChat {
   chatName: string;
@@ -6,6 +6,8 @@ interface IChat {
   users: Types.Array<Types.ObjectId>;
   latestMessage: Types.ObjectId;
   groupAdmin: Types.ObjectId;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const schema = new Schema<IChat>(

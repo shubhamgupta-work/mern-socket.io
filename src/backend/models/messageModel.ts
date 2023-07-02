@@ -4,6 +4,8 @@ interface IMessage {
   sender: Types.ObjectId;
   content: string;
   chat: Types.ObjectId;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const schema = new Schema<IMessage>(

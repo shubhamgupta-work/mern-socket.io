@@ -4,16 +4,12 @@ const baseUrl = "/api";
 
 type methods = "get" | "post" | "patch" | "put" | "delete";
 
-const callAxios = async (
-  method: methods,
-  url: string,
-  body?: any,
-  config?: any
-) => {
+const callAxios = async (method: methods, url: string, body?: any, config?: any) => {
+  const userInfo = JSON.parse(localStorage.userInfo);
   if (method === "get" || method === "delete") {
-    return axios[method](`${baseUrl}/${url}`, config);
+    return axios[method](`${baseUrl}/${url}`, { headers: { Authorization: `Bearer ${userInfo.token}` } });
   } else {
-    return axios[method](`${baseUrl}/${url}`, body, config);
+    return axios[method](`${baseUrl}/${url}`, body, { headers: { Authorization: `Bearer ${userInfo.token}` } });
   }
 };
 
