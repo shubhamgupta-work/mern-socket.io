@@ -31,6 +31,8 @@ interface IContext {
   setSelectedChat: (a: any) => void;
   chats: IChat[];
   setChats: (a: IChat[]) => void;
+  notifications: any[];
+  setNotifications: (a: any[]) => void;
 }
 
 const ChatContext = createContext<IContext>({
@@ -46,7 +48,9 @@ const ChatContext = createContext<IContext>({
   },
   setSelectedChat: (a) => {},
   chats: [],
-  setChats: (a: any) => {},
+  setChats: (a) => {},
+  notifications: [],
+  setNotifications: (a) => {},
 });
 
 const ChatProvider: FC<{ children: ReactNode }> = ({ children }) => {
@@ -62,6 +66,7 @@ const ChatProvider: FC<{ children: ReactNode }> = ({ children }) => {
     groupAdmin: "",
   });
   const [chats, setChats] = useState<IChat[]>([]);
+  const [notifications, setNotifications] = useState<any[]>([]);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
@@ -72,7 +77,11 @@ const ChatProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   }, [location]);
 
-  return <ChatContext.Provider value={{ user, setUser, selectedChat, setSelectedChat, chats, setChats }}>{children}</ChatContext.Provider>;
+  return (
+    <ChatContext.Provider value={{ user, setUser, selectedChat, setSelectedChat, chats, setChats, notifications, setNotifications }}>
+      {children}
+    </ChatContext.Provider>
+  );
 };
 
 export const ChatState = () => {

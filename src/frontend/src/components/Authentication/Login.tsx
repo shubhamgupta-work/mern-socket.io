@@ -1,13 +1,4 @@
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  InputRightElement,
-  VStack,
-  useToast,
-} from "@chakra-ui/react";
+import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, VStack, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import callAxios from "../../utils/axios";
@@ -44,12 +35,7 @@ const Login = () => {
         },
       };
 
-      const { data } = await callAxios(
-        "post",
-        "user/login",
-        { email, password },
-        config
-      );
+      const { data } = await callAxios("post", "user/login", { email, password }, config);
 
       // console.log(JSON.stringify(data));
       toast({
@@ -63,9 +49,10 @@ const Login = () => {
       setLoading(false);
       navigate("/chats");
     } catch (error: any) {
+      console.log(error);
       toast({
         title: "Error Occured!",
-        description: error.response.data.message,
+        description: error?.response?.data?.message,
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -79,12 +66,7 @@ const Login = () => {
     <VStack spacing="10px">
       <FormControl id="email" isRequired>
         <FormLabel>Email Address</FormLabel>
-        <Input
-          value={email}
-          type="email"
-          placeholder="Enter Your Email Address"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <Input value={email} type="email" placeholder="Enter Your Email Address" onChange={(e) => setEmail(e.target.value)} />
       </FormControl>
       <FormControl id="password" isRequired>
         <FormLabel>Password</FormLabel>
@@ -102,13 +84,7 @@ const Login = () => {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      <Button
-        colorScheme="blue"
-        width="100%"
-        style={{ marginTop: 15 }}
-        onClick={submitHandler}
-        isLoading={loading}
-      >
+      <Button colorScheme="blue" width="100%" style={{ marginTop: 15 }} onClick={submitHandler} isLoading={loading}>
         Login
       </Button>
       <Button
